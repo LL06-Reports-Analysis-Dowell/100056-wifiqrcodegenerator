@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "wifiqrcode": "apps/wifiqrcode",
+    "wifiqrcode-e2e": "apps/wifiqrcode-e2e"
+  }
+}
