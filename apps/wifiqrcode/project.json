@@ -37,8 +37,7 @@
       "outputs": [
         "apps/wifiqrcode/android/app/build/outputs/bundle",
         "apps/wifiqrcode/android/app/build/outputs/apk"
-      ],
-      "options": {}
+      ]
     },
     "bundle-android": {
       "executor": "@nrwl/react-native:bundle",

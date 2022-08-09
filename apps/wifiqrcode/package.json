@@ -9,6 +9,24 @@
     "react-native": "*",
     "react-native-config": "*",
     "react-native-svg": "*",
-    "@react-native-async-storage/async-storage": "*"
+    "@react-native-async-storage/async-storage": "*",
+    "react-native-gesture-handler": "*",
+    "@react-navigation/native": "*",
+    "@react-navigation/stack": "*",
+    "native-base": "*",
+    "expo-status-bar": "*",
+    "react-native-elements": "*",
+    "react-native-modal": "*",
+    "react-native-paper": "*",
+    "react-native-wifi-reborn": "*",
+    "@expo/vector-icons": "*",
+    "react-native-vector-icons": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-screens": "*",
+    "react-native-network-info": "*",
+    "axios": "*",
+    "react-native-public-ip": "*",
+    "rn-fetch-blob": "*",
+    "react-native-splash-screen": "*"
   }
 }

@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "shared-ui-layout": "libs/shared-ui-layout",
     "wifiqrcode": "apps/wifiqrcode",
     "wifiqrcode-e2e": "apps/wifiqrcode-e2e"
   }
