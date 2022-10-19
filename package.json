@@ -39,6 +39,7 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "^0.17.7",
+    "react-native-webview": "^11.23.1",
     "react-native-wifi-and-hotspot-wizard": "^1.0.5-stable",
     "react-native-wifi-reborn": "^4.7.0",
     "rn-fetch-blob": "^0.12.0",

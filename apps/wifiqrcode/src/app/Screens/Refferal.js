@@ -349,6 +349,21 @@ const Refferal = ({ navigation }) => {
                     Maybe later
                   </Text>
                 </TouchableOpacity>
+                <Link
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSfkA4nyFeRuHb_Fs1k1w5oNE7iL3y4IgX8ESiQHO142lkk-YA/viewform"
+                  isExternal
+                  _text={{
+                    ...styles.text,
+                    marginTop: '5%',
+                    fontSize: 20,
+                    color: '#078F04',
+                    textDecorationLine: 'underline',
+                  }}
+                  ml="auto"
+                  mr="auto"
+                >
+                  Review Us
+                </Link>
               </VStack>
             </VStack>
           </VStack>

@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import Colors from '../../Utils/Colors';
 import { Wifi } from './Data';
 import {
   Qrcode1,
@@ -12,6 +13,7 @@ import {
   More,
   Print,
   Copy,
+  Wifi2,
 } from '../components/Images';
 import axios from 'axios';
 
@@ -25,31 +27,10 @@ import {
   Alert,
   ScrollView,
   TextInput,
-} from 'react-native';
-import {
-  Box,
   Text,
-  FlatList,
   Image,
-  HStack,
-  VStack,
-  Center,
-  NativeBaseProvider,
-  ArrowBackIcon,
-  Button,
-  Radio,
-  Select,
-  CheckIcon,
-  Link,
-  Heading,
-  Input,
-  Form,
-  FormControl,
-  Item,
-  Label,
-  ArrowDownIcon,
-  TextArea,
-} from 'native-base';
+} from 'react-native';
+
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -60,16 +41,16 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
-
-import { Header, Icon, Card } from 'react-native-elements';
+import Button from '../components/Button';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 import Modal from 'react-native-modal';
+import Header from '../components/Header';
 
 const Emailqrcode = ({ navigation, route }) => {
   const { nameref } = useRef();
-  const { Qrocdeurl } = route.params;
+  const { Qrocdeurl, Name, ID } = route.params;
   const [wifi1, setwifi1] = useState(false);
   const [wifi2, setwifi2] = useState(false);
   const [wifi3, setwifi3] = useState(false);
@@ -84,14 +65,18 @@ const Emailqrcode = ({ navigation, route }) => {
   const [Usernmae, setusername] = useState('');
 
   const Next = (email, name) => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
     if (disabled == true) {
-      setwifi2(true);
+      Alert.alert('You can only send one Email');
     } else if (name === '') {
-      setChecked1(true);
-      setChecked(true);
+      Alert.alert('Name Required');
     } else if (email === '') {
-      setChecked1(true);
-      setChecked(false);
+      Alert.alert('Email Required');
+    } else if (reg.test(email) === false) {
+      Alert.alert('Invalid Email');
+
+      return false;
     } else {
       const registered = {
         name: name,
@@ -104,7 +89,7 @@ const Emailqrcode = ({ navigation, route }) => {
         .post('https://100056.pythonanywhere.com/wifi/qr-email/', registered)
         .then(
           (response) => console.log(response.data),
-          setwifi1(true),
+          Alert.alert('Email Send Succesfully'),
           setdisabled(true),
 
           setChecked(false),
@@ -131,252 +116,232 @@ const Emailqrcode = ({ navigation, route }) => {
     }, 700);
   };
   return (
-    <View style={{ ...styles.conatainer }}>
+    <ImageBackground
+      style={{ ...styles.conatainer }}
+      source={require('../Images/home.png')}
+    >
       <StatusBar style="dark" />
-      <NativeBaseProvider>
-        <View style={{ ...styles.header }}>
-          <Header
-            containerStyle={
-              {
-                // remove shadow on Android
-              }
-            }
-            backgroundColor={'#fff'}
-            leftComponent={
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => navigation.goBack()}
-              >
-                <HStack>
-                  <Ionicons name="chevron-back" size={27} color="#078F04" />
-                  <Center>
-                    <Text
-                      style={{ ...styles.text, fontSize: 18, color: '#078F04' }}
-                    >
-                      Back
-                    </Text>
-                  </Center>
-                </HStack>
-              </TouchableOpacity>
-            }
-            centerComponent={
-              <Text style={{ ...styles.text, fontSize: 24 }}>
-                Email QR Code
-              </Text>
-            }
-          />
-          <VStack
-            style={{ width: width * 0.9, borderColor: '#959595CC' }}
-            borderBottomWidth="3"
-            mx="auto"
-          ></VStack>
-        </View>
-        <ScrollView style={{ flex: 1 }}>
-          <VStack style={{ ...styles.maincont }}>
-            <VStack style={{ ...styles.subcont }}>
-              <VStack
-                style={{ ...styles.subcont, width: width * 0.75 }}
-                mt="1%"
-              >
-                <VStack>
-                  <Text style={{ ...styles.text, fontSize: 20 }}>MU Guest</Text>
-
-                  <Text
-                    style={{
-                      ...styles.text,
-                      fontSize: 14,
-                      fontWeight: '400',
-                      color: '#848484',
-                    }}
-                  >
-                    Secured
-                  </Text>
-                </VStack>
-
-                <Image
-                  source={{ uri: Qrocdeurl }}
-                  style={{ height: 270 }}
-                  resizeMode="contain"
-                  mt="5%"
-                />
-
-                <Text
-                  style={{
-                    ...styles.text,
-                    fontSize: 16,
-                    fontWeight: '400',
-                    color: '#848484',
-                  }}
-                >
-                  You can email this QR code.
-                </Text>
-
-                <TextInput
-                  style={{ ...styles.Input }}
-                  placeholder="  Enter Your Name"
-                  value={name}
-                  onChangeText={(name) => setname(name)}
-                />
-                {checked ? (
-                  <HStack ml="auto">
-                    <Text
-                      style={{
-                        ...styles.text,
-                        fontSize: 16,
-                        fontWeight: '400',
-                        color: '#FF0000',
-                      }}
-                    >
-                      Field Required
-                    </Text>
-                  </HStack>
-                ) : null}
-
-                <TextInput
-                  style={{ ...styles.Input, marginTop: '10%' }}
-                  placeholder="  Enter Email"
-                  value={email}
-                  onChangeText={(email) => setemail(email)}
-                />
-                {checked1 ? (
-                  <HStack ml="auto">
-                    <Text
-                      style={{
-                        ...styles.text,
-                        fontSize: 16,
-                        fontWeight: '400',
-                        color: '#FF0000',
-                      }}
-                    >
-                      Field Required
-                    </Text>
-                  </HStack>
-                ) : null}
-
-                <Button
-                  style={{ ...styles.Button }}
-                  shadow="4"
-                  // disabled={disabled1}
-                  _text={{ fontSize: 30, marginTop: '-4%' }}
-                  mt="10%"
-                  onPress={() => Next(email, name)}
-                >
-                  Done
-                </Button>
-              </VStack>
-            </VStack>
-          </VStack>
-        </ScrollView>
-
-        <Modal
-          isVisible={wifi1}
-          avoidKeyboard={false}
-          animationIn={'slideInRight'}
-          animationOut={'slideOutRight'}
-          backdropTransitionOutTiming={1000}
-          animationInTiming={500}
-          animationOutTiming={500}
-          onBackButtonPress={() => setwifi1(false)}
-        >
-          <View style={styles.modalContentwifioverlay}>
-            <VStack style={{ flex: 1 }}>
-              <VStack my="auto" space="10%">
-                <Text style={{ ...styles.text, fontSize: 24 }}>Email Sent</Text>
-
-                <Text
-                  style={{ ...styles.text, fontSize: 20, fontWeight: '400' }}
-                >
-                  Email sent to “{Usernmae} ”.
-                </Text>
-              </VStack>
-            </VStack>
-            <VStack
-              borderTopWidth="1"
-              style={{ borderColor: '#959595', flex: 0.5 }}
-            >
-              <VStack my="auto">
-                <TouchableOpacity
-                  activeOpacity={1}
-                  onPress={() => {
-                    setwifi1(false), Delay();
-                  }}
-                >
-                  <Text
-                    style={{
-                      ...styles.text,
-                      fontSize: 20,
-                      color: '#078F04',
-                      fontWeight: '400',
-                    }}
-                  >
-                    Okay
-                  </Text>
-                </TouchableOpacity>
-              </VStack>
-            </VStack>
-          </View>
-        </Modal>
-        <Modal
-          isVisible={wifi2}
-          avoidKeyboard={false}
-          animationIn={'slideInRight'}
-          animationOut={'slideOutRight'}
-          backdropTransitionOutTiming={1000}
-          animationInTiming={500}
-          animationOutTiming={500}
-          onBackButtonPress={() => {
-            setwifi2(false), setdisabled1(true);
+      <Header Title="Email QR code" />
+      <ScrollView style={styles.subcont}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignSelf: 'center',
+            marginTop: '10%',
+            marginLeft: '-5%',
           }}
         >
-          <View style={styles.modalContentwifioverlay}>
-            <VStack style={{ flex: 1 }}>
-              <VStack my="auto" space="10%">
-                <Text
-                  style={{ ...styles.text, fontSize: 24, fontWeight: 'bold' }}
-                >
-                  Email not Send{' '}
-                </Text>
+          <Wifi2 />
+          <Text style={styles.header}>{Name}</Text>
+        </View>
+        <Image
+          source={{ uri: qrcode_url }}
+          style={{
+            height: 270,
+            width: 270,
+            alignSelf: 'center',
+            marginTop: '5%',
+          }}
+          alt="121"
+        />
+        <View style={styles.box3}>
+          <ScrollView
+            style={{
+              ...styles.subcont,
+              marginBottom: null,
 
-                <Text
+              marginTop: '2%',
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                  color: Colors.Gray,
+                }}
+              >
+                Recipient Name
+              </Text>
+              <View style={{ flexDirection: 'row', marginTop: '2%' }}>
+                <View
                   style={{
-                    ...styles.text,
-                    fontSize: 20,
-                    fontWeight: '400',
-                    textAlign: 'center',
+                    height: '100%',
+                    width: '2%',
+                    backgroundColor: Colors.Green,
+                  }}
+                ></View>
+                <TextInput
+                  style={{
+                    height: 42,
+                    backgroundColor: '#fff',
+                    fontSize: 15,
+                    width: '95%',
+                    borderWidth: 1,
+                    borderColor: Colors.LightGray,
+                    color: Colors.Gray,
+                    paddingHorizontal: 10,
+                  }}
+                  value={name}
+                  onChangeText={setname}
+                  placeholder="Enter the name of recipient"
+                  placeholderTextColor={Colors.Gray}
+                />
+              </View>
+            </View>
+            <View style={{ marginTop: '5%' }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                  color: Colors.Gray,
+                }}
+              >
+                Recipient Email
+              </Text>
+              <View style={{ flexDirection: 'row', marginTop: '2%' }}>
+                <View
+                  style={{
+                    height: '100%',
+                    width: '2%',
+                    backgroundColor: Colors.Green,
+                  }}
+                ></View>
+                <TextInput
+                  style={{
+                    height: 42,
+                    backgroundColor: '#fff',
+                    fontSize: 15,
+                    width: '95%',
+                    borderWidth: 1,
+                    borderColor: Colors.LightGray,
+                    color: Colors.Gray,
+                    paddingHorizontal: 10,
+                  }}
+                  value={email}
+                  onChangeText={setemail}
+                  placeholder="Enter the Email of recipient"
+                  placeholderTextColor={Colors.Gray}
+                />
+              </View>
+            </View>
+            <View style={{ marginTop: '5%' }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                  color: Colors.Gray,
+                }}
+              >
+                Subject
+              </Text>
+              <View style={{ flexDirection: 'row', marginTop: '2%' }}>
+                <View
+                  style={{
+                    height: '100%',
+                    width: '2%',
+                    backgroundColor: Colors.Green,
+                  }}
+                ></View>
+                <TextInput
+                  style={{
+                    height: 42,
+                    backgroundColor: '#fff',
+                    fontSize: 15,
+                    width: '95%',
+                    borderWidth: 1,
+                    borderColor: Colors.LightGray,
+                    color: Colors.Gray,
+                    paddingHorizontal: 10,
+                  }}
+                  value={Usernmae}
+                  onChangeText={setusername}
+                  placeholder="<1234567890Q123456789012345678901234>"
+                  placeholderTextColor={Colors.Gray}
+                />
+              </View>
+            </View>
+            <View style={{ marginTop: '5%', marginBottom: '5%' }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                  color: Colors.Gray,
+                }}
+              >
+                Email content
+              </Text>
+              <View style={{ flexDirection: 'row', marginTop: '2%' }}>
+                <View
+                  style={{
+                    height: '100%',
+                    width: '2%',
+                    backgroundColor: Colors.Green,
+                  }}
+                ></View>
+                <TextInput
+                  style={{
+                    height: 42,
+                    backgroundColor: '#fff',
+                    fontSize: 15,
+                    width: '95%',
+                    borderWidth: 1,
+                    borderColor: Colors.LightGray,
+                    color: Colors.Gray,
+                    paddingHorizontal: 10,
+                  }}
+                  placeholder="Message"
+                  placeholderTextColor={Colors.Gray}
+                />
+              </View>
+            </View>
+          </ScrollView>
+        </View>
+        <Button
+          Context="Email the QR Code"
+          style={styles.Button2}
+          onPress={() => Next(email, name)}
+        />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: '5%',
+            justifyContent: 'space-between',
+          }}
+        >
+          {/* <AntDesign name="infocirlceo" size={30} color={Colors.Yellow} /> */}
+
+          <View style={{ marginLeft: 'auto' }}>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View
+                  style={{
+                    width: 90,
+                    height: 90,
+                    borderRadius: 90,
+                    borderWidth: 2,
+                    borderColor: Colors.Green,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                 >
-                  You Can Only Send {'\n'}One Email At a Time
+                  <Ionicons
+                    name="chevron-back"
+                    size={60}
+                    color={Colors.Green}
+                  />
+                </View>
+                <Text style={{ ...styles.text1, fontSize: 15 }}>
+                  Create QR Code
                 </Text>
-              </VStack>
-            </VStack>
-            <VStack
-              borderTopWidth="1"
-              style={{ borderColor: '#959595', flex: 0.5 }}
-            >
-              <VStack my="auto">
-                <TouchableOpacity
-                  activeOpacity={1}
-                  onPress={() => {
-                    setwifi2(false), setdisabled1(true);
-                  }}
-                >
-                  <Text
-                    style={{
-                      ...styles.text,
-                      fontSize: 20,
-                      color: '#078F04',
-                      fontWeight: '400',
-                    }}
-                  >
-                    Okay
-                  </Text>
-                </TouchableOpacity>
-              </VStack>
-            </VStack>
+              </TouchableOpacity>
+            </View>
           </View>
-        </Modal>
-      </NativeBaseProvider>
-    </View>
+        </View>
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -387,21 +352,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   subcont: {
-    width: width * 0.9,
+    width: '90%',
+    flex: 1,
 
     marginLeft: 'auto',
     marginRight: 'auto',
+    paddingBottom: '5%',
+  },
+  Button2: {
+    width: '100%',
+    marginTop: '5%',
+  },
+  box3: {
+    width: '100%',
+    height: 350,
+    borderWidth: 1,
+
+    borderColor: Colors.Green,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    marginTop: '5%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   maincont: {
     paddingBottom: '20%',
   },
-  text: {
-    fontFamily: 'robotoRegular',
-    fontWeight: '600',
-    fontSize: 26,
-    textAlign: 'center',
-    lineHeight: null,
-  },
+
   Button: {
     width: width * 0.7,
     height: 50,
@@ -411,8 +388,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   header: {
-    flex: 0.18,
-    justifyContent: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.Gray,
+    marginLeft: '2%',
   },
   circle: {
     width: width * 0.068,
@@ -457,7 +436,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '1%',
   },
   Input: {
-    height: 49,
+    height: 50,
     backgroundColor: '#fff',
     fontSize: 20,
     borderWidth: 2,

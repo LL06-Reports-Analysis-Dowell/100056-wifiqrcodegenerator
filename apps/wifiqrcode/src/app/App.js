@@ -5,6 +5,7 @@ import 'react-native-gesture-handler';
 import { View, Text, LogBox, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { StatusBar } from 'expo-status-bar';
 import Createqrocde from './Screens/Createqrocde';
 import Tutorial from './Screens/Tutorial';
 import Selectwifi from './Screens/Selectwifi';
@@ -14,6 +15,10 @@ import Finishup from './Screens/Finishup';
 import Emailqrcode from './Screens/Emailqrcode';
 import Refferal from './Screens/Refferal';
 import SplashScreen from 'react-native-splash-screen';
+import ConfirmWifi from './Screens/ConfirmWifi';
+import SecurityPolicy from './Screens/SecurityPolicy';
+import PrivacyPolicy from './Screens/PrivacyPolicy';
+import FeedBack from './Screens/Feedback';
 const Stack = createStackNavigator();
 LogBox.ignoreAllLogs();
 
@@ -24,6 +29,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
+      <StatusBar style="dark" />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Createqrocde" component={Createqrocde} />
         <Stack.Screen name="Tutorial" component={Tutorial} />
@@ -33,6 +39,10 @@ const App = () => {
         <Stack.Screen name="Finishup" component={Finishup} />
         <Stack.Screen name="Emailqrcode" component={Emailqrcode} />
         <Stack.Screen name="Refferal" component={Refferal} />
+        <Stack.Screen name="ConfirmWifi" component={ConfirmWifi} />
+        <Stack.Screen name="SecurityPolicy" component={SecurityPolicy} />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+        <Stack.Screen name="FeedBack" component={FeedBack} />
       </Stack.Navigator>
     </NavigationContainer>
   );

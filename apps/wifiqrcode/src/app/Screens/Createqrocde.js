@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-
+import { Arrow, Update } from '../../Utils/Icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { WebView } from 'react-native-webview';
 import {
   StyleSheet,
   View,
@@ -11,157 +13,153 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
-} from 'react-native';
-import {
-  Box,
-  FlatList,
-  Text,
   Image,
-  HStack,
-  VStack,
-  Center,
-  NativeBaseProvider,
-  ArrowBackIcon,
-  Button,
-  Radio,
-  Select,
-  CheckIcon,
-  Link,
-  Heading,
-  Input,
-  Form,
-  FormControl,
-  Item,
-  Label,
-  ArrowDownIcon,
-  TextArea,
-} from 'native-base';
-import { Qrcode, Mobile, Wifi, Nav } from '../components/Images';
+  Text,
+  BackHandler,
+} from 'react-native';
+
+import Button from '../components/Button';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Createqrocde = ({ navigation }) => {
   return (
-    <SafeAreaProvider>
-      <ScrollView style={{ ...styles.conatainer }}>
+    <View style={{ flex: 1 }}>
+      <StatusBar style="dark" />
+      <ImageBackground
+        style={{ ...styles.conatainer }}
+        source={require('../Images/home.png')}
+      >
         <StatusBar style="dark" />
-        <NativeBaseProvider>
-          <VStack style={{ ...styles.maincont }}>
-            <VStack style={{ ...styles.subcont }} mt="30%">
-              <Text style={{ ...styles.text, lineHeight: null }}>
-                Do you want to create{'\n'}QR Code for your Wi-Fi?
-              </Text>
-              <HStack justifyContent="space-between" mt="10%">
-                <Qrcode />
-                <Center mb="5%">
-                  <Nav />
-                </Center>
-
-                <Mobile style={{ width: 90, height: 120 }} />
-
-                <Center mb="5%">
-                  <Nav />
-                </Center>
-
-                <Center mb="5%">
-                  <Wifi style={{ width: 80, height: 57 }} />
-                </Center>
-              </HStack>
-
-              <Text
-                style={{
-                  ...styles.text,
-                  fontWeight: '400',
-                  fontSize: 17,
-                  marginTop: '10%',
-                  lineHeight: null,
-                }}
-              >
-                Create QR code for your Wi-Fi connection{'\n'}
-                Scan the QR code to connect {'\n'}
-                Wi-Fi at any time{}
-              </Text>
-
-              <Button
-                style={{ ...styles.Button }}
-                shadow="4"
-                _text={{ fontSize: 30, marginTop: '-4%' }}
-                mt="10%"
-                onPress={() => navigation.navigate('Selectwifi')}
-              >
-                Create QR Code
-              </Button>
-
-              <VStack
-                style={{ width: width * 0.8, borderColor: '#959595CC' }}
-                borderBottomWidth="4"
-                mx="auto"
-                mt="13%"
-              ></VStack>
-              <Text
-                style={{
-                  ...styles.text,
-                  marginTop: '10%',
-                  fontSize: 24,
-                  lineHeight: null,
-                }}
-              >
-                Don’t know how to use?
-              </Text>
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => navigation.navigate('Tutorial')}
-              >
-                <Text
-                  style={{
-                    ...styles.text,
-                    marginTop: '2%',
-                    fontSize: 20,
-                    color: '#078F04',
-                    textDecorationLine: 'underline',
-                  }}
-                >
-                  Click here for tutorial
-                </Text>
-              </TouchableOpacity>
-            </VStack>
-          </VStack>
-        </NativeBaseProvider>
-      </ScrollView>
-    </SafeAreaProvider>
+        <View style={styles.maincont}>
+          <Image
+            source={require('../Images/Logo.png')}
+            resizeMode="contain"
+            style={{ width: 150, height: 150 }}
+          />
+          <Text style={styles.text}>
+            DoWell{'\n'}
+            <Text style={{ ...styles.text, color: '#008037', fontSize: 25 }}>
+              Wi-Fi QR Code
+            </Text>
+          </Text>
+        </View>
+        <View style={styles.subcont}>
+          <View style={{ flexDirection: 'row' }}>
+            <Arrow />
+            <Text style={styles.text1}>Create QR code for your Wifi</Text>
+          </View>
+          <View style={{ flexDirection: 'row', marginTop: '5%' }}>
+            <Arrow />
+            <Text style={styles.text1}>
+              Users can Scan the QR code to connect without entering wifi
+              credentials
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', marginTop: '5%' }}>
+            <Arrow />
+            <Text style={{ ...styles.text1, width: null }}>Read the</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Tutorial')}>
+              <Text style={{ ...styles.text2 }}>Disclaimer </Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={{ ...styles.text1, width: null, marginLeft: '10%' }}>
+            before continuing
+          </Text>
+          <Button
+            Context="Create QR Code"
+            style={styles.Button}
+            onPress={() => navigation.navigate('Selectwifi')}
+          />
+        </View>
+        <View style={styles.bottomview}>
+          {/* <AntDesign name="infocirlceo" size={30} color="#fac43a" /> */}
+          {/* <View>
+            <Update />
+            <Button
+              Context="Install"
+              style={styles.Button1}
+              Contextstyle={{ fontSize: 10 }}
+            />
+          </View> */}
+          <Image
+            style={{
+              width: 200,
+              height: 200,
+              position: 'absolute',
+              top: -150,
+              marginLeft: '40%',
+            }}
+            source={require('../Images/qrcode12.png')}
+            resizeMode="contain"
+          />
+          <TouchableOpacity
+            onPress={() => BackHandler.exitApp()}
+            activeOpacity={1}
+            style={{ marginLeft: 'auto' }}
+          >
+            <AntDesign name="login" size={30} color="#a6a6a6" />
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+    </View>
   );
 };
 
 export default Createqrocde;
 const styles = StyleSheet.create({
   conatainer: {
-    backgroundColor: '#fff',
     flex: 1,
   },
   subcont: {
-    width: width * 0.9,
-
+    width: '90%',
+    flex: 1,
     marginLeft: 'auto',
     marginRight: 'auto',
   },
   maincont: {
-    paddingBottom: '20%',
-    height: height,
-    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: '10%',
   },
   text: {
     fontFamily: 'robotoRegular',
-    fontWeight: '600',
-    fontSize: 30,
-    textAlign: 'center',
+    color: '#C4C4C4',
+    fontSize: 20,
+
+    fontWeight: 'bold',
+
+    top: '-15%',
+  },
+  text1: {
+    fontSize: 17,
+    color: 'black',
+    fontStyle: 'italic',
+    width: '40%',
+    marginLeft: '2%',
+  },
+  text2: {
+    fontSize: 17,
+    color: '#5271ff',
+    fontStyle: 'italic',
+    marginLeft: '5%',
+    textDecorationLine: 'underline',
   },
   Button: {
-    width: width * 0.7,
-    height: 54,
-    backgroundColor: '#078F04',
+    marginTop: '5%',
+  },
+  Button1: {
+    alignSelf: 'center',
+    width: 70,
+    height: 20,
+  },
+  bottomview: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '95%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    borderRadius: 10,
+    marginBottom: '5%',
   },
 });

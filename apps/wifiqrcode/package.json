@@ -27,6 +27,7 @@
     "axios": "*",
     "react-native-public-ip": "*",
     "rn-fetch-blob": "*",
-    "react-native-splash-screen": "*"
+    "react-native-splash-screen": "*",
+    "react-native-webview": "*"
   }
 }
