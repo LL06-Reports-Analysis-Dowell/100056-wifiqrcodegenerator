@@ -10,6 +10,7 @@ buildscript {
         minSdkVersion = 21
         compileSdkVersion = 31
         targetSdkVersion = 31
+         kotlin_version = '1.6.10' 
 
         if (System.properties['os.arch'] == "aarch64") {
             // For M1 Users we need to use the NDK 24 which added support for aarch64
@@ -27,13 +28,26 @@ buildscript {
         classpath("com.android.tools.build:gradle:3.0.1")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("de.undercouch:gradle-download-task:4.1.2")
+          classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
 allprojects {
+
+configurations.all {
+resolutionStrategy {
+force 'com.facebook.react:react-native:0.68.2' //select Version you used
+}
+}
+
+
+
+
     repositories {
+         maven { url 'https://maven.google.com' }
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url("$rootDir/../node_modules/react-native/android")
@@ -51,11 +65,16 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
+        
 
         
         maven {
             // All of Detox' artifacts are provided via the npm module
             url "$rootDir/../node_modules/detox/Detox-android"
+        }
+          maven {
+            // All of Detox' artifacts are provided via the npm module
+            url "https://plugins.gradle.org/m2/"
         }
         
     }

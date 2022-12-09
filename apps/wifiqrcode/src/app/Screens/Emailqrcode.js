@@ -29,6 +29,7 @@ import {
   TextInput,
   Text,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 
 import Feather from 'react-native-vector-icons/Feather';
@@ -50,13 +51,16 @@ import Header from '../components/Header';
 
 const Emailqrcode = ({ navigation, route }) => {
   const { nameref } = useRef();
-  const { Qrocdeurl, Name, ID } = route.params;
+  const { Qrocdeurl, Name, id } = route.params;
   const [wifi1, setwifi1] = useState(false);
   const [wifi2, setwifi2] = useState(false);
   const [wifi3, setwifi3] = useState(false);
   const [disabled, setdisabled] = useState(false);
   const [disabled1, setdisabled1] = useState(false);
   const [qrcode_url, setqrcode_url] = useState(Qrocdeurl);
+  const [subject, setsubject] = useState('');
+  const [content, setcontent] = useState('');
+  const [responses, setresponses] = useState(true);
 
   const [checked, setChecked] = useState(false);
   const [checked1, setChecked1] = useState(false);
@@ -73,6 +77,10 @@ const Emailqrcode = ({ navigation, route }) => {
       Alert.alert('Name Required');
     } else if (email === '') {
       Alert.alert('Email Required');
+    } else if (subject === '') {
+      Alert.alert('subject Required');
+    } else if (content === '') {
+      Alert.alert('content Required');
     } else if (reg.test(email) === false) {
       Alert.alert('Invalid Email');
 
@@ -82,23 +90,29 @@ const Emailqrcode = ({ navigation, route }) => {
         name: name,
         email: email,
         qrcode_url: qrcode_url,
+        subject: subject,
+        content: content,
+        id: id,
       };
+      console.log(id);
       setusername(name);
 
       axios
         .post('https://100056.pythonanywhere.com/wifi/qr-email/', registered)
-        .then(
-          (response) => console.log(response.data),
-          Alert.alert('Email Send Succesfully'),
+        .then((response) => {
           setdisabled(true),
-
-          setChecked(false),
-          setChecked1(false),
-          setname(''),
-          setemail('')
-        )
-
-        .catch((e) => console.log(e));
+            setChecked(false),
+            setChecked1(false),
+            setname(''),
+            setemail('');
+          setcontent('');
+          setsubject('');
+          console.log(response.data), Alert.alert('Email Send Succesfully');
+        })
+        .catch((e) => {
+          console.log(e);
+          Alert.alert('Email Didnt Send ');
+        });
     }
   };
 
@@ -255,8 +269,8 @@ const Emailqrcode = ({ navigation, route }) => {
                     color: Colors.Gray,
                     paddingHorizontal: 10,
                   }}
-                  value={Usernmae}
-                  onChangeText={setusername}
+                  value={subject}
+                  onChangeText={setsubject}
                   placeholder="<1234567890Q123456789012345678901234>"
                   placeholderTextColor={Colors.Gray}
                 />
@@ -293,6 +307,8 @@ const Emailqrcode = ({ navigation, route }) => {
                   }}
                   placeholder="Message"
                   placeholderTextColor={Colors.Gray}
+                  value={content}
+                  onChangeText={setcontent}
                 />
               </View>
             </View>

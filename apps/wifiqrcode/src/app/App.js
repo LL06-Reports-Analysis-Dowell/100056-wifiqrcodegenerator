@@ -18,7 +18,10 @@ import SplashScreen from 'react-native-splash-screen';
 import ConfirmWifi from './Screens/ConfirmWifi';
 import SecurityPolicy from './Screens/SecurityPolicy';
 import PrivacyPolicy from './Screens/PrivacyPolicy';
+import CustomizedQrcode from './Screens/CustomizedQrocde';
+import Emailsqrcode from './Screens/EmailsQrcode';
 import FeedBack from './Screens/Feedback';
+import Finishup1 from './Screens/Finishup1';
 const Stack = createStackNavigator();
 LogBox.ignoreAllLogs();
 
@@ -35,9 +38,13 @@ const App = () => {
         <Stack.Screen name="Tutorial" component={Tutorial} />
         <Stack.Screen name="Selectwifi" component={Selectwifi} />
         <Stack.Screen name="Addpasword" component={Addpasword} />
+        <Stack.Screen name="CustomizedQrcode" component={CustomizedQrcode} />
+
         <Stack.Screen name="Termsandcondition" component={Termsandcondition} />
         <Stack.Screen name="Finishup" component={Finishup} />
+        <Stack.Screen name="Finishup1" component={Finishup1} />
         <Stack.Screen name="Emailqrcode" component={Emailqrcode} />
+        <Stack.Screen name="Emailsqrcode" component={Emailsqrcode} />
         <Stack.Screen name="Refferal" component={Refferal} />
         <Stack.Screen name="ConfirmWifi" component={ConfirmWifi} />
         <Stack.Screen name="SecurityPolicy" component={SecurityPolicy} />

@@ -30,6 +30,10 @@ target 'Wifiqrcode' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+  pod 'RNViewShot', :path => '../node_modules/react-native-view-shot'
+
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'WifiqrcodeTests' do
     inherit! :complete
     # Pods for testing

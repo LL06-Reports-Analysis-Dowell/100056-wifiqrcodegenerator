@@ -29,6 +29,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Header from '../components/Header';
 import { Cycle, Update } from '../../Utils/Icons';
 import Button from '../components/Button';
+import ScreenDividers from '../components/ScreenDividers';
 
 import Colors from '../../Utils/Colors';
 
@@ -42,30 +43,12 @@ const ConfirmWifi = ({ navigation, route }) => {
     >
       <StatusBar style="dark" />
       <Header Title="Data Safety" style={styles.Header} />
-
+      <ScreenDividers
+        secondboxstyle={{ backgroundColor: Colors.LightGray }}
+        thirdboxstyle={{ backgroundColor: Colors.LightGray }}
+        forthboxstyle={{ backgroundColor: Colors.LightGray }}
+      />
       <ScrollView style={styles.subcont}>
-        <View style={styles.Headerview}>
-          <View>
-            <View style={styles.Box}>
-              <Text style={styles.text}>1</Text>
-            </View>
-            <Text style={styles.text1}>Select Wifi</Text>
-          </View>
-          <Text style={styles.text2}>- - - - -{'>'}</Text>
-          <View>
-            <View style={{ ...styles.Box, backgroundColor: Colors.LightGray }}>
-              <Text style={{ ...styles.text }}>2</Text>
-            </View>
-            <Text style={styles.text1}>Enter Credentials</Text>
-          </View>
-          <Text style={styles.text2}>- - - - -{'>'}</Text>
-          <View>
-            <View style={{ ...styles.Box, backgroundColor: Colors.LightGray }}>
-              <Text style={{ ...styles.text }}>3</Text>
-            </View>
-            <Text style={styles.text1}>Create QR Code</Text>
-          </View>
-        </View>
         <ScrollView style={{ flex: 1, marginTop: '5%' }}>
           <View style={styles.box3}>
             <View

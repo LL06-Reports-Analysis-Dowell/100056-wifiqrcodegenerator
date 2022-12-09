@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { useState, useEffect } from 'react';
+import ScreenDividers from '../components/ScreenDividers';
 
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -152,29 +153,11 @@ const Selectwifi = ({ navigation }) => {
       <Header Title="Select Wifi to create QR code" />
 
       <View style={styles.subcont}>
-        <View style={styles.Headerview}>
-          <View>
-            <View style={styles.Box}>
-              <Text style={styles.text}>1</Text>
-            </View>
-            <Text style={styles.text1}>Select Wifi</Text>
-          </View>
-          <Text style={styles.text2}>- - - - -{'>'}</Text>
-          <View>
-            <View style={{ ...styles.Box, backgroundColor: Colors.LightGray }}>
-              <Text style={{ ...styles.text }}>2</Text>
-            </View>
-            <Text style={styles.text1}>Enter Credentials</Text>
-          </View>
-          <Text style={styles.text2}>- - - - -{'>'}</Text>
-          <View>
-            <View style={{ ...styles.Box, backgroundColor: Colors.LightGray }}>
-              <Text style={{ ...styles.text }}>3</Text>
-            </View>
-            <Text style={styles.text1}>Create QR Code</Text>
-          </View>
-        </View>
-
+        <ScreenDividers
+          secondboxstyle={{ backgroundColor: Colors.LightGray }}
+          thirdboxstyle={{ backgroundColor: Colors.LightGray }}
+          forthboxstyle={{ backgroundColor: Colors.LightGray }}
+        />
         <View style={{ flex: 1, marginTop: '5%' }}>
           {nearbyNetworksList.length >= 1 ? (
             <FlatList
@@ -298,7 +281,7 @@ const Selectwifi = ({ navigation }) => {
                     color={Colors.Green}
                   />
                 </View>
-                <Text style={{ ...styles.text1, fontSize: 15 }}>
+                <Text style={{ ...styles.text5, fontSize: 15 }}>
                   Credentials
                 </Text>
               </TouchableOpacity>
@@ -333,6 +316,12 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     textAlign: 'center',
   },
+  text5: {
+    fontSize: 10,
+    color: Colors.Gray,
+    fontStyle: 'italic',
+    textAlign: 'center',
+  },
   text2: {
     fontSize: 20,
     color: Colors.Green,
@@ -343,7 +332,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: '5%',
+    marginVertical: '5%',
     alignSelf: 'center',
   },
   Box: {
@@ -354,6 +343,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
+    marginLeft: '5%',
   },
   Box1: {
     width: 25,
