@@ -89,6 +89,19 @@ const Finishup1 = ({ navigation, route }) => {
   const [load, setload] = useState(true);
   const [Locationdata, setlocationdata] = useState([]);
   const [datas, setData] = useState({ data: { qrcodeimage: '' } });
+  const [dt, setDt] = useState(new Date().toLocaleString());
+
+  var today = new Date();
+  let date =
+    today.getDate() +
+    '/' +
+    parseInt(today.getMonth() + 1) +
+    '/' +
+    today.getFullYear();
+  var hours = new Date().getHours(); //To get the Current Hours
+  var min = new Date().getMinutes(); //To get the Current Minutes
+  var sec = new Date().getSeconds(); //To get the Current Seconds
+  var tm = hours + ':' + min + ':' + sec;
 
   const registered = {
     wifi_password: wifi_password,
@@ -96,9 +109,13 @@ const Finishup1 = ({ navigation, route }) => {
     Function: Function,
     security: security,
     logo: logo,
+    date: date,
+    time: tm,
   };
 
   const postdata = async () => {
+    console.log(registered);
+
     await axios
       .post('https://100073.pythonanywhere.com/wifi/create-qr/', registered)
       .then((response) => {

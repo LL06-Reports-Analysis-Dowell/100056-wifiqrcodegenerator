@@ -60,7 +60,7 @@ const Emailqrcode = ({ navigation, route }) => {
   const [qrcode_url, setqrcode_url] = useState(Qrocdeurl);
   const [subject, setsubject] = useState('');
   const [content, setcontent] = useState('');
-  const [responses, setresponses] = useState(true);
+  const [Loading, setloading] = useState(false);
 
   const [checked, setChecked] = useState(false);
   const [checked1, setChecked1] = useState(false);
@@ -86,6 +86,7 @@ const Emailqrcode = ({ navigation, route }) => {
 
       return false;
     } else {
+      setloading(true);
       const registered = {
         name: name,
         email: email,
@@ -108,6 +109,8 @@ const Emailqrcode = ({ navigation, route }) => {
           setcontent('');
           setsubject('');
           console.log(response.data), Alert.alert('Email Send Succesfully');
+          setloading(false);
+          navigation.goBack();
         })
         .catch((e) => {
           console.log(e);
@@ -136,227 +139,240 @@ const Emailqrcode = ({ navigation, route }) => {
     >
       <StatusBar style="dark" />
       <Header Title="Email QR code" />
-      <ScrollView style={styles.subcont}>
+      {Loading ? (
         <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            alignSelf: 'center',
-            marginTop: '10%',
-            marginLeft: '-5%',
-          }}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-          <Wifi2 />
-          <Text style={styles.header}>{Name}</Text>
+          <ActivityIndicator size="large" color={Colors.Green} />
+          <Text
+            style={{ color: Colors.Gray, fontSize: 20, fontStyle: 'italic' }}
+          >
+            Sending Email ....
+          </Text>
         </View>
-        <Image
-          source={{ uri: qrcode_url }}
-          style={{
-            height: 270,
-            width: 270,
-            alignSelf: 'center',
-            marginTop: '5%',
-          }}
-          alt="121"
-        />
-        <View style={styles.box3}>
-          <ScrollView
+      ) : (
+        <ScrollView style={styles.subcont} nestedScrollEnabled={true}>
+          <View
             style={{
-              ...styles.subcont,
-              marginBottom: null,
-
-              marginTop: '2%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              alignSelf: 'center',
+              marginTop: '10%',
+              marginLeft: '-5%',
             }}
           >
-            <View>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                  color: Colors.Gray,
-                }}
-              >
-                Recipient Name
-              </Text>
-              <View style={{ flexDirection: 'row', marginTop: '2%' }}>
-                <View
+            <Wifi2 />
+            <Text style={styles.header}>{Name}</Text>
+          </View>
+          <Image
+            source={{ uri: qrcode_url }}
+            style={{
+              height: 270,
+              width: 270,
+              alignSelf: 'center',
+              marginTop: '5%',
+            }}
+            alt="121"
+          />
+          <ScrollView style={styles.box3} nestedScrollEnabled={true}>
+            <View
+              style={{
+                ...styles.subcont,
+                marginBottom: null,
+
+                marginTop: '2%',
+              }}
+            >
+              <View>
+                <Text
                   style={{
-                    height: '100%',
-                    width: '2%',
-                    backgroundColor: Colors.Green,
-                  }}
-                ></View>
-                <TextInput
-                  style={{
-                    height: 42,
-                    backgroundColor: '#fff',
                     fontSize: 15,
-                    width: '95%',
-                    borderWidth: 1,
-                    borderColor: Colors.LightGray,
+                    fontWeight: 'bold',
                     color: Colors.Gray,
-                    paddingHorizontal: 10,
                   }}
-                  value={name}
-                  onChangeText={setname}
-                  placeholder="Enter the name of recipient"
-                  placeholderTextColor={Colors.Gray}
-                />
+                >
+                  Recipient Name
+                </Text>
+                <View style={{ flexDirection: 'row', marginTop: '2%' }}>
+                  <View
+                    style={{
+                      height: '100%',
+                      width: '2%',
+                      backgroundColor: Colors.Green,
+                    }}
+                  ></View>
+                  <TextInput
+                    style={{
+                      height: 42,
+                      backgroundColor: '#fff',
+                      fontSize: 15,
+                      width: '95%',
+                      borderWidth: 1,
+                      borderColor: Colors.LightGray,
+                      color: Colors.Gray,
+                      paddingHorizontal: 10,
+                    }}
+                    value={name}
+                    onChangeText={setname}
+                    placeholder="Enter the name of recipient"
+                    placeholderTextColor={Colors.Gray}
+                  />
+                </View>
               </View>
-            </View>
-            <View style={{ marginTop: '5%' }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                  color: Colors.Gray,
-                }}
-              >
-                Recipient Email
-              </Text>
-              <View style={{ flexDirection: 'row', marginTop: '2%' }}>
-                <View
+              <View style={{ marginTop: '5%' }}>
+                <Text
                   style={{
-                    height: '100%',
-                    width: '2%',
-                    backgroundColor: Colors.Green,
-                  }}
-                ></View>
-                <TextInput
-                  style={{
-                    height: 42,
-                    backgroundColor: '#fff',
                     fontSize: 15,
-                    width: '95%',
-                    borderWidth: 1,
-                    borderColor: Colors.LightGray,
+                    fontWeight: 'bold',
                     color: Colors.Gray,
-                    paddingHorizontal: 10,
                   }}
-                  value={email}
-                  onChangeText={setemail}
-                  placeholder="Enter the Email of recipient"
-                  placeholderTextColor={Colors.Gray}
-                />
+                >
+                  Recipient Email
+                </Text>
+                <View style={{ flexDirection: 'row', marginTop: '2%' }}>
+                  <View
+                    style={{
+                      height: '100%',
+                      width: '2%',
+                      backgroundColor: Colors.Green,
+                    }}
+                  ></View>
+                  <TextInput
+                    style={{
+                      height: 42,
+                      backgroundColor: '#fff',
+                      fontSize: 15,
+                      width: '95%',
+                      borderWidth: 1,
+                      borderColor: Colors.LightGray,
+                      color: Colors.Gray,
+                      paddingHorizontal: 10,
+                    }}
+                    value={email}
+                    onChangeText={setemail}
+                    placeholder="Enter the Email of recipient"
+                    placeholderTextColor={Colors.Gray}
+                  />
+                </View>
               </View>
-            </View>
-            <View style={{ marginTop: '5%' }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                  color: Colors.Gray,
-                }}
-              >
-                Subject
-              </Text>
-              <View style={{ flexDirection: 'row', marginTop: '2%' }}>
-                <View
+              <View style={{ marginTop: '5%' }}>
+                <Text
                   style={{
-                    height: '100%',
-                    width: '2%',
-                    backgroundColor: Colors.Green,
-                  }}
-                ></View>
-                <TextInput
-                  style={{
-                    height: 42,
-                    backgroundColor: '#fff',
                     fontSize: 15,
-                    width: '95%',
-                    borderWidth: 1,
-                    borderColor: Colors.LightGray,
+                    fontWeight: 'bold',
                     color: Colors.Gray,
-                    paddingHorizontal: 10,
                   }}
-                  value={subject}
-                  onChangeText={setsubject}
-                  placeholder="<1234567890Q123456789012345678901234>"
-                  placeholderTextColor={Colors.Gray}
-                />
+                >
+                  Subject
+                </Text>
+                <View style={{ flexDirection: 'row', marginTop: '2%' }}>
+                  <View
+                    style={{
+                      height: '100%',
+                      width: '2%',
+                      backgroundColor: Colors.Green,
+                    }}
+                  ></View>
+                  <TextInput
+                    style={{
+                      height: 42,
+                      backgroundColor: '#fff',
+                      fontSize: 15,
+                      width: '95%',
+                      borderWidth: 1,
+                      borderColor: Colors.LightGray,
+                      color: Colors.Gray,
+                      paddingHorizontal: 10,
+                    }}
+                    value={subject}
+                    onChangeText={setsubject}
+                    placeholder="Enter Subject"
+                    placeholderTextColor={Colors.Gray}
+                  />
+                </View>
               </View>
-            </View>
-            <View style={{ marginTop: '5%', marginBottom: '5%' }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                  color: Colors.Gray,
-                }}
-              >
-                Email content
-              </Text>
-              <View style={{ flexDirection: 'row', marginTop: '2%' }}>
-                <View
+              <View style={{ marginTop: '5%', marginBottom: '5%' }}>
+                <Text
                   style={{
-                    height: '100%',
-                    width: '2%',
-                    backgroundColor: Colors.Green,
-                  }}
-                ></View>
-                <TextInput
-                  style={{
-                    height: 42,
-                    backgroundColor: '#fff',
                     fontSize: 15,
-                    width: '95%',
-                    borderWidth: 1,
-                    borderColor: Colors.LightGray,
+                    fontWeight: 'bold',
                     color: Colors.Gray,
-                    paddingHorizontal: 10,
                   }}
-                  placeholder="Message"
-                  placeholderTextColor={Colors.Gray}
-                  value={content}
-                  onChangeText={setcontent}
-                />
+                >
+                  Email content
+                </Text>
+                <View style={{ flexDirection: 'row', marginTop: '2%' }}>
+                  <View
+                    style={{
+                      height: '100%',
+                      width: '2%',
+                      backgroundColor: Colors.Green,
+                    }}
+                  ></View>
+                  <TextInput
+                    style={{
+                      height: 42,
+                      backgroundColor: '#fff',
+                      fontSize: 15,
+                      width: '95%',
+                      borderWidth: 1,
+                      borderColor: Colors.LightGray,
+                      color: Colors.Gray,
+                      paddingHorizontal: 10,
+                    }}
+                    placeholder="Message"
+                    placeholderTextColor={Colors.Gray}
+                    value={content}
+                    onChangeText={setcontent}
+                  />
+                </View>
               </View>
             </View>
           </ScrollView>
-        </View>
-        <Button
-          Context="Email the QR Code"
-          style={styles.Button2}
-          onPress={() => Next(email, name)}
-        />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: '5%',
-            justifyContent: 'space-between',
-          }}
-        >
-          {/* <AntDesign name="infocirlceo" size={30} color={Colors.Yellow} /> */}
+          <Button
+            Context="Email the QR Code"
+            style={styles.Button2}
+            onPress={() => Next(email, name)}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: '5%',
+              justifyContent: 'space-between',
+            }}
+          >
+            {/* <AntDesign name="infocirlceo" size={30} color={Colors.Yellow} /> */}
 
-          <View style={{ marginLeft: 'auto' }}>
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <View
-                  style={{
-                    width: 90,
-                    height: 90,
-                    borderRadius: 90,
-                    borderWidth: 2,
-                    borderColor: Colors.Green,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Ionicons
-                    name="chevron-back"
-                    size={60}
-                    color={Colors.Green}
-                  />
-                </View>
-                <Text style={{ ...styles.text1, fontSize: 15 }}>
-                  Create QR Code
-                </Text>
-              </TouchableOpacity>
+            <View style={{ marginLeft: 'auto' }}>
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <View
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: 90,
+                      borderWidth: 2,
+                      borderColor: Colors.Green,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Ionicons
+                      name="chevron-back"
+                      size={60}
+                      color={Colors.Green}
+                    />
+                  </View>
+                  <Text style={{ ...styles.text1, fontSize: 15 }}>
+                    Create QR Code
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      )}
     </ImageBackground>
   );
 };
@@ -388,8 +404,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#fff',
     marginTop: '5%',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   maincont: {
     paddingBottom: '20%',

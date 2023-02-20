@@ -117,7 +117,7 @@ const ConfirmWifi = ({ navigation, route }) => {
                 marginLeft: 'auto',
                 marginRight: '5%',
               }}
-              onPress={() => navigation.navigate('PrivacyPolicy')}
+              onPress={() => navigation.navigate('Index')}
             >
               <Text style={styles.more}>More</Text>
             </TouchableOpacity>

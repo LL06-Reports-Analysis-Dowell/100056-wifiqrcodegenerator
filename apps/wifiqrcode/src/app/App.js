@@ -22,6 +22,10 @@ import CustomizedQrcode from './Screens/CustomizedQrocde';
 import Emailsqrcode from './Screens/EmailsQrcode';
 import FeedBack from './Screens/Feedback';
 import Finishup1 from './Screens/Finishup1';
+import Loading from './Screens/Loading';
+import Index from './Screens/index';
+import EmbededLogins from './Screens/EmbededLogin';
+import LoginScreen from './Screens/LoginScreen';
 const Stack = createStackNavigator();
 LogBox.ignoreAllLogs();
 
@@ -39,7 +43,7 @@ const App = () => {
         <Stack.Screen name="Selectwifi" component={Selectwifi} />
         <Stack.Screen name="Addpasword" component={Addpasword} />
         <Stack.Screen name="CustomizedQrcode" component={CustomizedQrcode} />
-
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="Termsandcondition" component={Termsandcondition} />
         <Stack.Screen name="Finishup" component={Finishup} />
         <Stack.Screen name="Finishup1" component={Finishup1} />
@@ -50,6 +54,9 @@ const App = () => {
         <Stack.Screen name="SecurityPolicy" component={SecurityPolicy} />
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
         <Stack.Screen name="FeedBack" component={FeedBack} />
+        <Stack.Screen name="Loading" component={Loading} />
+        <Stack.Screen name="Index" component={Index} />
+        <Stack.Screen name="EmbededLogins" component={EmbededLogins} />
       </Stack.Navigator>
     </NavigationContainer>
   );
